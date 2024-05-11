@@ -50,9 +50,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     }
 
     @Inject(method = "initDataTracker", at = @At("RETURN"))
-    protected void backpackattribute$initDataTracker(/*DataTracker.Builder builder, */CallbackInfo ci) {
-//        builder.add(OLD_BACKPACK_CAPACITY, 0);
-        this.dataTracker.startTracking(OLD_BACKPACK_CAPACITY, 0);
+    protected void backpackattribute$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(OLD_BACKPACK_CAPACITY, 0);
 
     }
 
@@ -78,12 +77,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     public void backpackattribute$readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
 
-//        if (nbt.contains("backpack_items", NbtElement.LIST_TYPE)) {
-//            this.backpackInventory.readNbtList(nbt.getList("backpack_items", NbtElement.COMPOUND_TYPE), this.getRegistryManager());
-//        }
-
         if (nbt.contains("backpack_items", NbtElement.LIST_TYPE)) {
-            this.backpackInventory.readNbtList(nbt.getList("backpack_items", NbtElement.COMPOUND_TYPE));
+            this.backpackInventory.readNbtList(nbt.getList("backpack_items", NbtElement.COMPOUND_TYPE), this.getRegistryManager());
         }
 
     }
@@ -91,9 +86,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     public void backpackattribute$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
 
-//        nbt.put("backpack_items", this.backpackInventory.toNbtList(this.getRegistryManager()));
-
-        nbt.put("backpack_items", this.backpackInventory.toNbtList());
+        nbt.put("backpack_items", this.backpackInventory.toNbtList(this.getRegistryManager()));
 
     }
 
@@ -133,7 +126,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
                 if (!backpackInventory.getStack(j).isEmpty()) {
                     playerInventory.offerOrDrop(backpackInventory.removeStack(j));
                     if (((PlayerEntity) (Object) this) instanceof ServerPlayerEntity serverPlayerEntity) {
-                        serverPlayerEntity.sendMessage(Text.translatable("gui.backpack_screen.itemRemovedFromInactiveBackpackSlots"), true);
+                        serverPlayerEntity.sendMessage(Text.translatable("hud.message.itemRemovedFromInactiveBackpackSlots"), true);
                     }
                 }
             }

@@ -16,8 +16,7 @@ import net.minecraft.util.Identifier;
 public class BackpackScreen
 extends HandledScreen<BackpackScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = BackpackAttribute.identifier("textures/gui/container/backpack_background.png");
-//    public static final Identifier SLOT_TEXTURE = new Identifier("container/inventory_slot.png"); // TODO 1.20.6
-    public static final Identifier SLOT_TEXTURE = BackpackAttribute.identifier("textures/gui/container/inventory_slot.png");
+    public static final Identifier SLOT_TEXTURE = new Identifier("container/slot.png");
     private final int backpackCapacity;
 
     public BackpackScreen(BackpackScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -39,8 +38,7 @@ extends HandledScreen<BackpackScreenHandler> {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-//        this.renderBackground(context, mouseX, mouseY, delta); // TODO 1.20.6
-        this.renderBackground(context);
+        this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         this.drawMouseoverTooltip(context, mouseX, mouseY);
     }
@@ -53,20 +51,17 @@ extends HandledScreen<BackpackScreenHandler> {
         int k;
         if (this.backpackCapacity > 0) {
             for (k = 0; k < Math.min(this.backpackCapacity, 9); ++k) {
-//                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + k * 18, j + 17, 18, 18); // TODO 1.20.6
-                context.drawTexture(SLOT_TEXTURE, i + 7 + k * 18, j + 17, 0, 0, 18, 18, 18, 18);
+                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + k * 18, j + 17, 18, 18);
             }
         }
         if (this.backpackCapacity > 9) {
             for (k = 9; k < Math.min(this.backpackCapacity, 18); ++k) {
-//                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + (k - 9) * 18, j + 35, 18, 18); // TODO 1.20.6
-                context.drawTexture(SLOT_TEXTURE, i + 7 + (k - 9) * 18, j + 35, 0, 0, 18, 18, 18, 18);
+                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + (k - 9) * 18, j + 35, 18, 18);
             }
         }
         if (this.backpackCapacity > 18) {
             for (k = 18; k < Math.min(this.backpackCapacity, 27); ++k) {
-//                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + (k - 18) * 18, j + 53, 18, 18); // TODO 1.20.6
-                context.drawTexture(SLOT_TEXTURE, i + 7 + (k - 18) * 18, j + 53, 0, 0, 18, 18, 18, 18);
+                context.drawGuiTexture(SLOT_TEXTURE, i + 7 + (k - 18) * 18, j + 53, 18, 18);
             }
         }
     }

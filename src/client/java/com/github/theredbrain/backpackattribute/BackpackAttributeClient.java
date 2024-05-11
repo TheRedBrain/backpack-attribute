@@ -9,7 +9,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 public class BackpackAttributeClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 		// Registry
 		KeyBindingsRegistry.registerKeyBindings();
 		HandledScreens.register(ScreenHandlerTypesRegistry.BACKPACK_SCREEN_HANDLER, BackpackScreen::new);
