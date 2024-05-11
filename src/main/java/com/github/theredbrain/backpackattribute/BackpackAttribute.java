@@ -18,8 +18,6 @@ public class BackpackAttribute implements ModInitializer {
 	public static final String MOD_ID = "backpackattribute";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	// TODO 1.20.6
-//	public static final RegistryEntry<EntityAttribute> BACKPACK_CAPACITY = Registry.register(Registries.ATTRIBUTE, identifier("player.backpack_capacity"), new ClampedEntityAttribute("attribute.name.player.backpack_capacity", 0.0, 0.0, 27.0).setTracked(true));
 	public static final EntityAttribute BACKPACK_CAPACITY = Registry.register(Registries.ATTRIBUTE, identifier("player.backpack_capacity"), new ClampedEntityAttribute("attribute.name.player.backpack_capacity", 0.0, 0.0, 27.0).setTracked(true));
 
 	@Override
@@ -30,21 +28,12 @@ public class BackpackAttribute implements ModInitializer {
 		ScreenHandlerTypesRegistry.registerAll();
 		GameRulesRegistry.init();
 
-		// TODO 1.20.6
-//		PayloadTypeRegistry.playC2S().register(OpenBackpackScreenPacket.PACKET_ID, OpenBackpackScreenPacket.PACKET_CODEC);
-		// Packets
-//		ServerPlayNetworking.registerGlobalReceiver(OpenBackpackScreenPacket.PACKET_ID, new OpenBackpackScreenPacketReceiver());
-
         ServerPlayNetworking.registerGlobalReceiver(OpenBackpackScreenPacket.TYPE, new OpenBackpackScreenPacketReceiver());
 
 	}
 
 	public static Identifier identifier(String path) {
 		return new Identifier(MOD_ID, path);
-	}
-
-	public static void info(String message) {
-		LOGGER.info("[" + MOD_ID + "] [info]: " + message);
 	}
 
 }
