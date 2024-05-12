@@ -32,6 +32,7 @@ public class KeyBindingsRegistry {
             }
         });
     }
+
     public static void openBackpackScreen(MinecraftClient client) {
         if (client.player != null) {
             ClientPlayNetworking.send(new OpenBackpackScreenPacket());

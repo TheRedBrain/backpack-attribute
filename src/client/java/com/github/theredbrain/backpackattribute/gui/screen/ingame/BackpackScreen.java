@@ -13,8 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 @Environment(value = EnvType.CLIENT)
-public class BackpackScreen
-        extends HandledScreen<BackpackScreenHandler> {
+public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = BackpackAttribute.identifier("textures/gui/container/backpack_background.png");
     public static final Identifier SLOT_TEXTURE = BackpackAttribute.identifier("textures/gui/container/inventory_slot.png");
     private final int backpackCapacity;

@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id 'maven-publish'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 version = project.mod_version
@@ -11,6 +12,17 @@ base {
 }
 
 repositories {
+
+	// Cloth Config
+	maven {
+		url "https://maven.shedaniel.me/"
+	}
+
+	// Cloth Config
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
 
 	// Slot Customization API
 	maven {
@@ -44,7 +56,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Stamina Attributes
+	// Cloth Config
+	modImplementation ("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config}")
+
+	// Slot Customization API
 	modImplementation "maven.modrinth:slot-customization-api:${project.slot_customization_api_version}"
 
 }
@@ -75,6 +90,23 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.base.archivesName.get()}"}
 	}
+}
+
+import com.modrinth.minotaur.dependencies.ModDependency
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN")
+	projectId = 'POj0eF6x' // The ID of your Modrinth project. Slugs will not work.
+	versionNumber = mod_version
+	versionType = "release" // can also be "beta" or "alpha"
+	uploadFile = remapJar
+	gameVersions = ['1.20.1'] // An array of game versions the version supports
+	loaders = ['fabric']
+	dependencies = [
+			new ModDependency('P7dR8mSH', 'required'), // Fabric API
+			new ModDependency('9s6osm5g', 'required'), // Cloth Config
+			new ModDependency('QYZ7JTtD', 'required') // Slot Customization API
+	]
+	changelog = "${update_changelog}"
 }
 
 // configure the maven publication

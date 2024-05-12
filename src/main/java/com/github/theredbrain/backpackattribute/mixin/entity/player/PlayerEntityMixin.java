@@ -38,6 +38,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     @Unique
     protected BackpackInventory backpackInventory = new BackpackInventory(27, ((PlayerEntity) (Object) this));
 
+    @Unique
+    private boolean shouldCheckForItemsInInactiveSlots = true;
+
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -65,11 +68,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     @Inject(method = "dropInventory", at = @At("TAIL"))
     protected void dropInventory(CallbackInfo ci) {
         if (!this.getWorld().getGameRules().getBoolean(GameRulesRegistry.KEEP_BACKPACK_INVENTORY)) {
+            BackpackAttribute.LOGGER.info("KEEP_BACKPACK_INVENTORY false");
             if (this.getWorld().getGameRules().getBoolean(GameRulesRegistry.CLEAR_BACKPACK_INVENTORY_ON_DEATH)) {
+                BackpackAttribute.LOGGER.info("this.backpackInventory.clear()");
                 this.backpackInventory.clear();
             } else {
+                BackpackAttribute.LOGGER.info("this.backpackInventory.dropAll()");
                 this.backpackInventory.dropAll();
             }
+        } else {
+            BackpackAttribute.LOGGER.info("KEEP_BACKPACK_INVENTORY true");
         }
 
     }
@@ -88,6 +96,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
 
         nbt.put("backpack_items", this.backpackInventory.toNbtList());
 
+    }
+
+    @Override
+    public int backpackattribute$getActiveBackpackCapacity() {
+        return Math.min(27, Math.max(0, Math.min(27, Math.max(0, BackpackAttribute.serverConfig.default_backpack_slot_amount)) + this.backpackattribute$getBackpackCapacity()));
     }
 
     @Override
@@ -117,20 +130,28 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
 
     @Unique
     private void ejectItemsFromInactiveBackpackSlots() {
-        int backpack_capacity = backpackattribute$getBackpackCapacity();
+        int backpack_capacity = backpackattribute$getActiveBackpackCapacity();
         if (this.backpackattribute$getOldBackpackCapacity() != backpack_capacity) {
+            this.shouldCheckForItemsInInactiveSlots = true;
+            this.backpackattribute$setOldBackpackCapacity(backpack_capacity);
+        }
+
+        // use a separate boolean to guarantee a check on login to account for changes to the server config
+        if (this.shouldCheckForItemsInInactiveSlots) {
+            boolean bl = false;
             for (int j = backpack_capacity; j < 27; j++) {
                 PlayerInventory playerInventory = this.getInventory();
                 BackpackInventory backpackInventory = this.backpackattribute$getBackpackInventory();
 
                 if (!backpackInventory.getStack(j).isEmpty()) {
                     playerInventory.offerOrDrop(backpackInventory.removeStack(j));
-                    if (((PlayerEntity) (Object) this) instanceof ServerPlayerEntity serverPlayerEntity) {
-                        serverPlayerEntity.sendMessage(Text.translatable("gui.backpack_screen.itemRemovedFromInactiveBackpackSlots"), true);
-                    }
+                    bl = true;
                 }
             }
-            this.backpackattribute$setOldBackpackCapacity(backpack_capacity);
+            if (bl && ((PlayerEntity) (Object) this) instanceof ServerPlayerEntity serverPlayerEntity) {
+                serverPlayerEntity.sendMessage(Text.translatable("hud.message.itemRemovedFromInactiveBackpackSlots"), false);
+            }
+            this.shouldCheckForItemsInInactiveSlots = false;
         }
     }
 }

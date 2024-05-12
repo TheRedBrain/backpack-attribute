@@ -13,9 +13,9 @@ public class OpenBackpackScreenPacketReceiver implements ServerPlayNetworking.Pl
     @Override
     public void receive(OpenBackpackScreenPacket packet, ServerPlayerEntity serverPlayerEntity, PacketSender responseSender) {
 
-        int i = ((DuckPlayerEntityMixin)serverPlayerEntity).backpackattribute$getBackpackCapacity();
+        int i = ((DuckPlayerEntityMixin)serverPlayerEntity).backpackattribute$getActiveBackpackCapacity();
         if (i <= 0) {
-            serverPlayerEntity.sendMessageToClient(Text.translatable("gui.backpack_screen.no_active_capacity"), true);
+            serverPlayerEntity.sendMessageToClient(Text.translatable("hud.message.no_active_capacity"), true);
             return;
         }
         serverPlayerEntity.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new BackpackScreenHandler(syncId, inventory), Text.translatable("gui.backpack_screen.title")));
