@@ -29,7 +29,7 @@ public class BackpackAttribute implements ModInitializer {
 	public static ServerConfig serverConfig;
 	private static PacketByteBuf serverConfigSerialized = PacketByteBufs.create();
 
-	public static final EntityAttribute BACKPACK_CAPACITY = Registry.register(Registries.ATTRIBUTE, identifier("player.backpack_capacity"), new ClampedEntityAttribute("attribute.name.player.backpack_capacity", 0.0, -27.0, 27.0).setTracked(true));
+	public static final EntityAttribute BACKPACK_CAPACITY = Registry.register(Registries.ATTRIBUTE, identifier("general.backpack_capacity"), new ClampedEntityAttribute("attribute.name.general.backpack_capacity", 0.0, -27.0, 27.0).setTracked(true));
 
 	@Override
 	public void onInitialize() {

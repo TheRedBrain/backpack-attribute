@@ -7,7 +7,6 @@ import com.github.theredbrain.backpackattribute.registry.GameRulesRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -23,7 +22,6 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlayerEntityMixin {
@@ -45,13 +43,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
         super(entityType, world);
     }
 
-    @Inject(method = "createPlayerAttributes", at = @At("RETURN"))
-    private static void backpackattribute$createPlayerAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        cir.getReturnValue()
-                .add(BackpackAttribute.BACKPACK_CAPACITY)
-        ;
-    }
-
     @Inject(method = "initDataTracker", at = @At("RETURN"))
     protected void backpackattribute$initDataTracker(CallbackInfo ci) {
         this.dataTracker.startTracking(OLD_BACKPACK_CAPACITY, 0);
@@ -68,16 +59,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
     @Inject(method = "dropInventory", at = @At("TAIL"))
     protected void dropInventory(CallbackInfo ci) {
         if (!this.getWorld().getGameRules().getBoolean(GameRulesRegistry.KEEP_BACKPACK_INVENTORY)) {
-            BackpackAttribute.LOGGER.info("KEEP_BACKPACK_INVENTORY false");
             if (this.getWorld().getGameRules().getBoolean(GameRulesRegistry.CLEAR_BACKPACK_INVENTORY_ON_DEATH)) {
-                BackpackAttribute.LOGGER.info("this.backpackInventory.clear()");
                 this.backpackInventory.clear();
             } else {
-                BackpackAttribute.LOGGER.info("this.backpackInventory.dropAll()");
                 this.backpackInventory.dropAll();
             }
-        } else {
-            BackpackAttribute.LOGGER.info("KEEP_BACKPACK_INVENTORY true");
         }
 
     }

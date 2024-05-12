@@ -15,39 +15,39 @@ public class BackpackInventory extends SimpleInventory {
     }
 
     @Override
-    public void readNbtList(NbtList list, RegistryWrapper.WrapperLookup registries) {
+    public void readNbtList(NbtList nbtList) {
         int i;
         for (i = 0; i < this.size(); ++i) {
             this.setStack(i, ItemStack.EMPTY);
         }
-        for (i = 0; i < list.size(); ++i) {
-            NbtCompound nbtCompound = list.getCompound(i);
+        for (i = 0; i < nbtList.size(); ++i) {
+            NbtCompound nbtCompound = nbtList.getCompound(i);
             int j = nbtCompound.getByte("Slot") & 0xFF;
             if (j < 0 || j >= this.size()) continue;
-            this.setStack(j, ItemStack.fromNbt(registries, nbtCompound).orElse(ItemStack.EMPTY));
+            this.setStack(j, ItemStack.fromNbt(nbtCompound));
         }
     }
 
     @Override
-    public NbtList toNbtList(RegistryWrapper.WrapperLookup registries) {
+    public NbtList toNbtList() {
         NbtList nbtList = new NbtList();
         for (int i = 0; i < this.size(); ++i) {
             ItemStack itemStack = this.getStack(i);
             if (itemStack.isEmpty()) continue;
             NbtCompound nbtCompound = new NbtCompound();
             nbtCompound.putByte("Slot", (byte)i);
-            nbtList.add(itemStack.encode(registries, nbtCompound));
+            itemStack.writeNbt(nbtCompound);
+            nbtList.add(nbtCompound);
         }
         return nbtList;
     }
 
     public void dropAll() {
-        for (int i = 0; i < this.heldStacks.size(); ++i) {
-            ItemStack itemStack = this.heldStacks.get(i);
+        for (int i = 0; i < this.stacks.size(); ++i) {
+            ItemStack itemStack = this.stacks.get(i);
             if (itemStack.isEmpty()) continue;
             this.player.dropItem(itemStack, true, false);
-            this.heldStacks.set(i, ItemStack.EMPTY);
+            this.stacks.set(i, ItemStack.EMPTY);
         }
     }
-
 }
