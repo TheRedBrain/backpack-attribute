@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "com.github.theredbrain.backpackattribute.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"entity.player.PlayerEntityMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "com.github.theredbrain.backpackattribute.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "entity.player.PlayerEntityMixin",
+    "server.network.ServerPlayerEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

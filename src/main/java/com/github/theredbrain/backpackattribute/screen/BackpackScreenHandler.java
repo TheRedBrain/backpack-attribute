@@ -19,7 +19,7 @@ public class BackpackScreenHandler extends ScreenHandler {
         super(ScreenHandlerTypesRegistry.BACKPACK_SCREEN_HANDLER, syncId);
         this.playerInventory = playerInventory;
         this.backpackInventory = ((DuckPlayerEntityMixin) playerInventory.player).backpackattribute$getBackpackInventory();
-        this.backpackCapacity = ((DuckPlayerEntityMixin) playerInventory.player).backpackattribute$getBackpackCapacity();
+        this.backpackCapacity = ((DuckPlayerEntityMixin) playerInventory.player).backpackattribute$getActiveBackpackCapacity();
 
         int i;
         // hotbar 0 - 8
@@ -41,13 +41,14 @@ public class BackpackScreenHandler extends ScreenHandler {
     }
 
     public ItemStack quickMove(PlayerEntity player, int slot) {
+
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot2 = (Slot)this.slots.get(slot);
         if (slot2 != null && slot2.hasStack()) {
             ItemStack itemStack2 = slot2.getStack();
             itemStack = itemStack2.copy();
             if (slot < 36) {
-                if (!this.insertItem(itemStack2, 36, Math.min(36 + ((DuckPlayerEntityMixin) player).backpackattribute$getBackpackCapacity(), this.slots.size()), false)) {
+                if (!this.insertItem(itemStack2, 36, Math.min(36 + ((DuckPlayerEntityMixin) player).backpackattribute$getActiveBackpackCapacity(), this.slots.size()), false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.insertItem(itemStack2, 0, 36, false)) {

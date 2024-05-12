@@ -4,6 +4,7 @@ import com.github.theredbrain.backpackattribute.inventory.BackpackInventory;
 
 public interface DuckPlayerEntityMixin {
 
+    int backpackattribute$getActiveBackpackCapacity();
     int backpackattribute$getBackpackCapacity();
     int backpackattribute$getOldBackpackCapacity();
     void backpackattribute$setOldBackpackCapacity(int backpack_capacity);
