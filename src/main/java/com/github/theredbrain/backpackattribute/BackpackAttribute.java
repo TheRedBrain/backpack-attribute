@@ -14,11 +14,8 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +26,7 @@ public class BackpackAttribute implements ModInitializer {
 	public static ServerConfig serverConfig;
 	private static PacketByteBuf serverConfigSerialized = PacketByteBufs.create();
 
-	public static final EntityAttribute BACKPACK_CAPACITY = Registry.register(Registries.ATTRIBUTE, identifier("general.backpack_capacity"), new ClampedEntityAttribute("attribute.name.general.backpack_capacity", 0.0, -27.0, 27.0).setTracked(true));
+	public static EntityAttribute BACKPACK_CAPACITY;
 
 	@Override
 	public void onInitialize() {

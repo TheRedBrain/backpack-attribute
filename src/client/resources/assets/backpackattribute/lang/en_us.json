@@ -1,5 +1,5 @@
 {
-	"attribute.name.player.backpack_capacity": "Backpack Capacity",
+	"attribute.name.generic.backpack_capacity": "Backpack Capacity",
 
 	"gamerule.keepBackpackInventory": "Keep backpack content on death",
 	"gamerule.clearBackpackInventoryOnDeath": "Destroy backpack content on death",

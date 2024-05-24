@@ -1,6 +1,6 @@
 # Backpack Attribute
 
-This is a different approach to a backpack in Minecraft. Instead of an item you equip to gain additional inventory slots, this mod adds a new gamerule (backpackSlotAmount) and a new attribute (player.backpack_capacity), which control how many slots you have available in a new backpack screen.\
+This is a different approach to a backpack in Minecraft. Instead of an item you equip to gain additional inventory slots, this mod adds a new gamerule (backpackSlotAmount) and a new attribute (generic.backpack_capacity), which control how many slots you have available in a new backpack screen.\
 The backpack can be opened via a hotkey (B by default).
 
 The minimum amount of slots is 0, in which case the backpack screen won't open. The player gets notified that they currently don't have backpack slots.
@@ -11,7 +11,7 @@ The maximum amount of slots is 27.
 
 The value "default_backpack_slot_amount" in the serverConfig file controls the amount of backpack slots each player has by default.
 
-The entity attribute "player.backpack_capacity" controls how many slots are added to/removed from the default amount. 
+The entity attribute "generic.backpack_capacity" controls how many slots are added to/removed from the default amount. 
 This is 0 by default, but with entity attribute modifiers (EAMs) it can be changed.
 
 Content mods or data packs can provide backpack slots via multiple different methods.
