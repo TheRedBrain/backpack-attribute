@@ -12,8 +12,8 @@ public class BackpackAttributeClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         // Packets
-        ClientPlayNetworking.registerGlobalReceiver(BackpackAttribute.ServerConfigSync.ID, (client, handler, buf, responseSender) -> {
-            BackpackAttribute.serverConfig = BackpackAttribute.ServerConfigSync.read(buf);
+        ClientPlayNetworking.registerGlobalReceiver(BackpackAttribute.ServerConfigSyncPacket.PACKET_ID, (payload, context) -> {
+            BackpackAttribute.serverConfig = payload.serverConfig();
         });
 
         // Registry

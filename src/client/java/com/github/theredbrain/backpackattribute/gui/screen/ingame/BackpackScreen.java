@@ -15,7 +15,7 @@ import net.minecraft.util.Identifier;
 @Environment(value = EnvType.CLIENT)
 public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = BackpackAttribute.identifier("textures/gui/container/backpack_background.png");
-    public static final Identifier SLOT_TEXTURE = BackpackAttribute.identifier("textures/gui/container/inventory_slot.png");
+    public static final Identifier SLOT_TEXTURE = Identifier.ofVanilla("textures/gui/sprites/container/slot.png");
     private final int backpackCapacity;
 
     public BackpackScreen(BackpackScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -37,7 +37,7 @@ public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context);
+        this.renderBackground(context, mouseX, mouseY, delta);
         super.render(context, mouseX, mouseY, delta);
         this.drawMouseoverTooltip(context, mouseX, mouseY);
     }
