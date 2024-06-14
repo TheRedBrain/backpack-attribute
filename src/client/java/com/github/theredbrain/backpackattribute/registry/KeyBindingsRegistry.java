@@ -16,10 +16,10 @@ public class KeyBindingsRegistry {
 
     public static void registerKeyBindings() {
         KeyBindingsRegistry.openBackpackScreen = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "key.betteradventuremode.backpackScreen",
+                "key.backpackattribute.backpackScreen",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                "category.betteradventuremode.category"
+                "category.backpackattribute.category"
         ));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KeyBindingsRegistry.openBackpackScreen.wasPressed()) {

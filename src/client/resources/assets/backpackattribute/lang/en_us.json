@@ -1,6 +1,8 @@
 {
 	"attribute.name.generic.backpack_capacity": "Backpack Capacity",
 
+	"category.backpackattribute.category": "Backpack Attribute",
+
 	"gamerule.keepBackpackInventory": "Keep backpack content on death",
 	"gamerule.clearBackpackInventoryOnDeath": "Destroy backpack content on death",
 	"gamerule.clearBackpackInventoryOnDeath.description": "This only matters, if the gamerule 'keepBackpackInventory' is set to false.",
@@ -8,5 +10,7 @@
 	"gui.backpack_screen.title": "Backpack",
 
 	"hud.message.itemRemovedFromInactiveBackpackSlots": "Your backpack got smaller and some items were transferred to your normal inventory. If your inventory was full, they were dropped at your location.",
-	"hud.message.no_active_capacity": "You currently have no backpack slots."
+	"hud.message.no_active_capacity": "You currently have no backpack slots.",
+
+	"key.backpackattribute.backpackScreen": "Open/Close Backpack"
 }
