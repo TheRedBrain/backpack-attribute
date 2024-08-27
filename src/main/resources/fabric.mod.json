@@ -11,6 +11,7 @@
 		"sources": "https://github.com/TheRedBrain/backpack-attribute"
 	},
 	"license": "MIT",
+	"icon": "assets/backpackattribute/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
