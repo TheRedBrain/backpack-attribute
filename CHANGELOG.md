@@ -1,3 +1,9 @@
+# 2.1.0
+
+- update to 1.21.1
+- added compatibility with "Inventory Size Attributes"
+- rendering of disabled slots is now controlled by a client config
+
 # 2.0.0
 
 - update to 1.21
