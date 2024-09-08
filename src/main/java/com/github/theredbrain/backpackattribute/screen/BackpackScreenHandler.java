@@ -1,8 +1,10 @@
 package com.github.theredbrain.backpackattribute.screen;
 
+import com.github.theredbrain.backpackattribute.BackpackAttribute;
 import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerEntityMixin;
 import com.github.theredbrain.backpackattribute.inventory.BackpackInventory;
 import com.github.theredbrain.backpackattribute.registry.ScreenHandlerTypesRegistry;
+import com.github.theredbrain.slotcustomizationapi.api.SlotCustomization;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -37,6 +39,16 @@ public class BackpackScreenHandler extends ScreenHandler {
             for (int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(backpackInventory, j + i * 9, 8 + j * 18, 18 + i * 18));
             }
+        }
+
+        // Inventory Size Attributes compatibility
+        int activeHotbarSize = BackpackAttribute.getActiveHotbarSize(playerInventory.player);
+        int activeInventorySize = BackpackAttribute.getActiveInventorySize(playerInventory.player);
+        for (i = 0; i < 9; i++) {
+            ((SlotCustomization) this.slots.get(i)).slotcustomizationapi$setDisabledOverride(i >= activeHotbarSize);
+        }
+        for (i = 9; i < 36; i++) {
+            ((SlotCustomization) this.slots.get(i)).slotcustomizationapi$setDisabledOverride(i >= 9 + activeInventorySize);
         }
     }
 

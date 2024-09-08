@@ -6,6 +6,7 @@ import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScree
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacketReceiver;
 import com.github.theredbrain.backpackattribute.registry.GameRulesRegistry;
 import com.github.theredbrain.backpackattribute.registry.ScreenHandlerTypesRegistry;
+import com.github.theredbrain.inventorysizeattributes.entity.player.DuckPlayerEntityMixin;
 import com.google.gson.Gson;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
@@ -14,7 +15,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
@@ -29,6 +32,16 @@ public class BackpackAttribute implements ModInitializer {
 	public static ServerConfig serverConfig;
 
 	public static RegistryEntry<EntityAttribute> BACKPACK_CAPACITY;
+
+	public static final boolean isInventorySizeAttributesLoaded = FabricLoader.getInstance().isModLoaded("inventorysizeattributes");
+
+	public static int getActiveInventorySize(PlayerEntity player) {
+		return isInventorySizeAttributesLoaded ? ((DuckPlayerEntityMixin) player).inventorysizeattributes$getActiveInventorySlotAmount() : 27;
+	}
+
+	public static int getActiveHotbarSize(PlayerEntity player) {
+		return isInventorySizeAttributesLoaded ? ((DuckPlayerEntityMixin) player).inventorysizeattributes$getActiveHotbarSlotAmount() : 9;
+	}
 
 	@Override
 	public void onInitialize() {
