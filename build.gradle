@@ -19,7 +19,7 @@ repositories {
 		url "https://maven.shedaniel.me/"
 	}
 
-	// Cloth Config
+	// Cloth Config, Mod Menu
 	maven {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
@@ -65,6 +65,9 @@ dependencies {
 
 	// Inventory Size Attributes
 	modImplementation "maven.modrinth:inventory-size-attributes:${project.inventory_size_attributes_version}"
+
+	// Mod Menu
+	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
 }
 
@@ -123,7 +126,8 @@ if(project.hasProperty('release_type')) {
 				requiredDependency 'fabric-api'
 				requiredDependency 'cloth-config'
 				requiredDependency 'slot-customization-api'
-				requiredDependency 'inventory-size-attributes'
+				optionalDependency 'inventory-size-attributes'
+				optionalDependency 'modmenu'
 			}
 
 			mainArtifact(remapJar)
@@ -153,7 +157,8 @@ if(project.hasProperty('release_type')) {
 			required.project 'fabric-api'
 			required.project 'cloth-config'
 			required.project 'slot-customization-api'
-			required.project 'inventory-size-attributes'
+			optional.project 'inventory-size-attributes'
+			optional.project 'modmenu'
 		}
 	}
 

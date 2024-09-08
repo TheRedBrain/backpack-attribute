@@ -1,9 +1,9 @@
 package com.github.theredbrain.backpackattribute.gui.screen.ingame;
 
 import com.github.theredbrain.backpackattribute.BackpackAttribute;
+import com.github.theredbrain.backpackattribute.BackpackAttributeClient;
 import com.github.theredbrain.backpackattribute.registry.KeyBindingsRegistry;
 import com.github.theredbrain.backpackattribute.screen.BackpackScreenHandler;
-import com.github.theredbrain.slotcustomizationapi.api.SlotCustomization;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -17,13 +17,14 @@ public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = BackpackAttribute.identifier("textures/gui/container/backpack_background.png");
     public static final Identifier SLOT_TEXTURE = Identifier.ofVanilla("textures/gui/sprites/container/slot.png");
     private final int backpackCapacity;
+    private final int hotbarSize;
+    private final int inventorySize;
 
     public BackpackScreen(BackpackScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
         this.backpackCapacity = handler.getBackpackCapacity();
-        for (int i = 36; i < this.handler.slots.size(); i++) {
-            ((SlotCustomization) this.handler.slots.get(i)).slotcustomizationapi$setDisabledOverride(i >= 36 + this.backpackCapacity);
-        }
+        this.hotbarSize = BackpackAttribute.getActiveHotbarSize(inventory.player);
+        this.inventorySize = BackpackAttribute.getActiveInventorySize(inventory.player);
     }
 
     @Override
@@ -46,22 +47,22 @@ public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int i = (this.width - this.backgroundWidth) / 2;
         int j = (this.height - this.backgroundHeight) / 2;
-        context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, this.backgroundWidth, this.backgroundHeight);
         int k;
-        if (this.backpackCapacity > 0) {
-            for (k = 0; k < Math.min(this.backpackCapacity, 9); ++k) {
-                context.drawTexture(SLOT_TEXTURE, i + 7 + k * 18, j + 17, 0, 0, 18, 18, 18, 18);
-            }
+        int m;
+        boolean showInactiveSlots = BackpackAttributeClient.clientConfig.show_inactive_slots;
+
+        context.drawTexture(BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, this.backgroundWidth, this.backgroundHeight);
+
+        for (k = 0; k < (showInactiveSlots ? 27 : Math.min(this.backpackCapacity, 27)); ++k) {
+            m = (k / 9);
+            context.drawTexture(SLOT_TEXTURE, i + 7 + (k - (m * 9)) * 18, j + 17 + (m * 18), 0, 0, 18, 18, 18, 18);
         }
-        if (this.backpackCapacity > 9) {
-            for (k = 9; k < Math.min(this.backpackCapacity, 18); ++k) {
-                context.drawTexture(SLOT_TEXTURE, i + 7 + (k - 9) * 18, j + 35, 0, 0, 18, 18, 18, 18);
-            }
+        for (k = 0; k < (showInactiveSlots ? 27 : Math.min(this.inventorySize, 27)); ++k) {
+            m = (k / 9);
+            context.drawTexture(SLOT_TEXTURE, i + 7 + (k - (m * 9)) * 18, j + 83 + (m * 18), 0, 0, 18, 18, 18, 18);
         }
-        if (this.backpackCapacity > 18) {
-            for (k = 18; k < Math.min(this.backpackCapacity, 27); ++k) {
-                context.drawTexture(SLOT_TEXTURE, i + 7 + (k - 18) * 18, j + 53, 0, 0, 18, 18, 18, 18);
-            }
+        for (k = 0; k < (showInactiveSlots ? 9 : Math.min(this.hotbarSize, 9)); ++k) {
+            context.drawTexture(SLOT_TEXTURE, i + 7 + k * 18, j + 141, 0, 0, 18, 18, 18, 18);
         }
     }
 }

@@ -50,6 +50,11 @@ public class BackpackScreenHandler extends ScreenHandler {
         for (i = 9; i < 36; i++) {
             ((SlotCustomization) this.slots.get(i)).slotcustomizationapi$setDisabledOverride(i >= 9 + activeInventorySize);
         }
+
+        for (i = 36; i < this.slots.size(); i++) {
+            ((SlotCustomization) this.slots.get(i)).slotcustomizationapi$setDisabledOverride(i >= 36 + this.backpackCapacity);
+        }
+
     }
 
     public ItemStack quickMove(PlayerEntity player, int slot) {
