@@ -10,7 +10,6 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 )
 public class ClientConfig implements ConfigData {
 
-	@ConfigEntry.Gui.PrefixText
 	public boolean show_inactive_slots = false;
 
 	public ClientConfig() {

@@ -12,5 +12,9 @@
 	"hud.message.itemRemovedFromInactiveBackpackSlots": "Your backpack got smaller and some items were transferred to your normal inventory. If your inventory was full, they were dropped at your location.",
 	"hud.message.no_active_capacity": "You currently have no backpack slots.",
 
-	"key.backpackattribute.backpackScreen": "Open/Close Backpack"
+	"key.backpackattribute.backpackScreen": "Open/Close Backpack",
+
+	"text.autoconfig.backpackattribute.title": "Backpack Attribute",
+
+	"text.autoconfig.backpackattribute.option.client.show_inactive_slots": "Show background of inactive slots"
 }
