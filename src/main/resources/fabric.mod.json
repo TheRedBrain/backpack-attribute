@@ -31,11 +31,11 @@
 		"minecraft": "${minecraft_version}",
 		"fabricloader": ">=${loader_version}",
 		"fabric-api": "*",
-		"slotcustomizationapi": "${slot_customization_api_version}",
-		"cloth-config": ">=${cloth_config_version}"
+		"cloth-config": ">=${cloth_config_version}",
+		"slotcustomizationapi": ">=${slot_customization_api_version}"
 	},
 	"suggests": {
-		"inventorysizeattributes": ">=${inventory_size_attributes_version}",
-		"modmenu": ">=${mod_menu_version}"
+		"inventorysizeattributes": "*",
+		"modmenu": "*"
 	}
 }
