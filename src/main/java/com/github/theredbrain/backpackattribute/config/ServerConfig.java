@@ -12,5 +12,5 @@ public class ServerConfig extends Config {
 		super(BackpackAttribute.identifier("server"));
 	}
 
-	public ValidatedInt default_backpack_slot_amount = new ValidatedInt(0, 0, 27);
+	public ValidatedInt default_backpack_slot_amount = new ValidatedInt(0, 27, 0);
 }
