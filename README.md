@@ -12,7 +12,7 @@ The maximum amount of slots is 27.
 
 The value "default_backpack_slot_amount" in the server config file controls the amount of backpack slots each player has by default.
 
-The entity attributes "generic.backpack_capacity" controls how many slots are added to/removed from the default amount. This is 0 by default, but with entity attribute modifiers (EAMs) it can be changed.
+The entity attribute "generic.backpack_capacity" controls how many slots are added to/removed from the default amount. This is 0 by default, but with entity attribute modifiers (EAMs) it can be changed.
 
 The background texture of disabled slots is not shown. This can be disabled in the client config.
 
@@ -35,4 +35,5 @@ When "keepBackpackInventory" is set to false, two outcomes are possible:
 - When "clearBackpackInventoryOnDeath" is false, the items are dropped on the players position.
 
 ## Mod Compatibility
+
 The backpack screen will not show disabled inventory slots, when "Inventory Size Attributes" is installed.

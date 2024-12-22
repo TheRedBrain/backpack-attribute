@@ -1,3 +1,8 @@
+# 2.2.0
+
+- removed dependency on cloth config
+- added dependency on fzzy config
+
 # 2.1.0
 
 - update to 1.21.1

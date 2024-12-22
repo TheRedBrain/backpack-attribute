@@ -14,7 +14,11 @@
 
 	"key.backpackattribute.backpackScreen": "Open/Close Backpack",
 
-	"text.autoconfig.backpackattribute.title": "Backpack Attribute",
+	"backpackattribute.client": "Client Side Settings",
 
-	"text.autoconfig.backpackattribute.option.client.show_inactive_slots": "Show background of inactive slots"
+	"backpackattribute.client.show_inactive_slots": "Show Inactive Slots",
+
+	"backpackattribute.server": "Server Side Settings",
+
+	"backpackattribute.server.default_backpack_slot_amount": "Default Backpack Slot Amount"
 }
