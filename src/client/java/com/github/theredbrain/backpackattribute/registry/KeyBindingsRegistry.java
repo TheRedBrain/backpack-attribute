@@ -1,5 +1,6 @@
 package com.github.theredbrain.backpackattribute.registry;
 
+import com.github.theredbrain.backpackattribute.BackpackAttributeClient;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -24,7 +25,7 @@ public class KeyBindingsRegistry {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KeyBindingsRegistry.openBackpackScreen.wasPressed()) {
                 if (!openBackpackScreenBoolean) {
-                    openBackpackScreen(client);
+                    BackpackAttributeClient.openBackpackScreen(client);
                 }
                 openBackpackScreenBoolean = true;
             } else if (openBackpackScreenBoolean) {
@@ -33,6 +34,7 @@ public class KeyBindingsRegistry {
         });
     }
 
+    @Deprecated
     public static void openBackpackScreen(MinecraftClient client) {
         if (client.player != null) {
             ClientPlayNetworking.send(new OpenBackpackScreenPacket());

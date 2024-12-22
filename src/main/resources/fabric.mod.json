@@ -19,19 +19,21 @@
 		],
 		"client": [
 			"com.github.theredbrain.backpackattribute.BackpackAttributeClient"
-		],
-		"modmenu": [
-			"com.github.theredbrain.backpackattribute.compatibility.ModMenuCompatibility"
 		]
 	},
 	"mixins": [
 		"backpackattribute.mixins.json"
 	],
+	"custom": {
+		"fzzy_config": [
+			"backpackattribute"
+		]
+	},
 	"depends": {
 		"minecraft": "${minecraft_version}",
 		"fabricloader": ">=${loader_version}",
 		"fabric-api": "*",
-		"cloth-config": ">=${cloth_config_version}",
+		"fzzy_config": ">=${fzzy_config_version}",
 		"slotcustomizationapi": ">=${slot_customization_api_version}"
 	},
 	"suggests": {

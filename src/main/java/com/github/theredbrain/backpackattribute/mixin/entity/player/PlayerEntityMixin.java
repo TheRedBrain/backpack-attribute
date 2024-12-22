@@ -86,7 +86,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
 
     @Override
     public int backpackattribute$getActiveBackpackCapacity() {
-        return Math.min(27, Math.max(0, Math.min(27, Math.max(0, BackpackAttribute.serverConfig.default_backpack_slot_amount)) + this.backpackattribute$getBackpackCapacity()));
+        return Math.min(27, Math.max(0, Math.min(27, Math.max(0, BackpackAttribute.SERVER_CONFIG.default_backpack_slot_amount.get())) + this.backpackattribute$getBackpackCapacity()));
     }
 
     @Override

@@ -1,17 +1,17 @@
 package com.github.theredbrain.backpackattribute.config;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import com.github.theredbrain.backpackattribute.BackpackAttribute;
+import me.fzzyhmstrs.fzzy_config.annotations.ConvertFrom;
+import me.fzzyhmstrs.fzzy_config.config.Config;
+import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedBoolean;
 
-@Config(
-		name = "client"
-)
-public class ClientConfig implements ConfigData {
-
-	public boolean show_inactive_slots = false;
+@ConvertFrom(fileName = "client.json5", folder = "backpackattribute")
+public class ClientConfig extends Config {
 
 	public ClientConfig() {
+		super(BackpackAttribute.identifier("client"));
 	}
+
+	public ValidatedBoolean show_inactive_slots = new ValidatedBoolean(false);
+
 }

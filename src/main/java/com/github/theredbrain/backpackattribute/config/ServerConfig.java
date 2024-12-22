@@ -1,17 +1,16 @@
 package com.github.theredbrain.backpackattribute.config;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import com.github.theredbrain.backpackattribute.BackpackAttribute;
+import me.fzzyhmstrs.fzzy_config.annotations.ConvertFrom;
+import me.fzzyhmstrs.fzzy_config.config.Config;
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
 
-@Config(
-        name = "server"
-)
-public class ServerConfig implements ConfigData {
-    @Comment("""
-            The default amount of backpack slots.
-            Must be between 0 and 27 (both inclusive)
-            """)
-    public int default_backpack_slot_amount = 0;
-    public ServerConfig() {}
+@ConvertFrom(fileName = "server.json5", folder = "backpackattribute")
+public class ServerConfig extends Config {
+
+	public ServerConfig() {
+		super(BackpackAttribute.identifier("server"));
+	}
+
+	public ValidatedInt default_backpack_slot_amount = new ValidatedInt(0, 0, 27);
 }
