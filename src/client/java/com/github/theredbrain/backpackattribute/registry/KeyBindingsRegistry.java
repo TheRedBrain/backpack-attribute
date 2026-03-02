@@ -1,5 +1,6 @@
 package com.github.theredbrain.backpackattribute.registry;
 
+import com.github.theredbrain.backpackattribute.BackpackAttribute;
 import com.github.theredbrain.backpackattribute.BackpackAttributeClient;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -14,13 +15,14 @@ public class KeyBindingsRegistry {
 
     public static KeyBinding openBackpackScreen;
     public static boolean openBackpackScreenBoolean;
+    public static KeyBinding.Category BACKPACK_ATTRIBUTE;
 
     public static void registerKeyBindings() {
         KeyBindingsRegistry.openBackpackScreen = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.backpackattribute.backpackScreen",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_B,
-                "category.backpackattribute.category"
+                BACKPACK_ATTRIBUTE
         ));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KeyBindingsRegistry.openBackpackScreen.wasPressed()) {
@@ -40,4 +42,9 @@ public class KeyBindingsRegistry {
             ClientPlayNetworking.send(new OpenBackpackScreenPacket());
         }
     }
+
+    static {
+        BACKPACK_ATTRIBUTE = KeyBinding.Category.create(BackpackAttribute.identifier("key_binding_category"));
+    }
+
 }

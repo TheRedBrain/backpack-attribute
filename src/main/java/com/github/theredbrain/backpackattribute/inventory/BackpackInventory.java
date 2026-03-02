@@ -2,10 +2,10 @@ package com.github.theredbrain.backpackattribute.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.inventory.StackWithSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 
 public class BackpackInventory extends SimpleInventory {
     public final PlayerEntity player;
@@ -15,35 +15,25 @@ public class BackpackInventory extends SimpleInventory {
         this.player = player;
     }
 
-    @Override
-    public void readNbtList(NbtList list, RegistryWrapper.WrapperLookup registries) {
-        for(int i = 0; i < this.size(); ++i) {
+    public void readData(ReadView.TypedListReadView<StackWithSlot> list) {
+        for (int i = 0; i < this.size(); i++) {
             this.setStack(i, ItemStack.EMPTY);
         }
 
-        for(int i = 0; i < list.size(); ++i) {
-            NbtCompound nbtCompound = list.getCompound(i);
-            int j = nbtCompound.getByte("Slot") & 255;
-            if (j >= 0 && j < this.size()) {
-                this.setStack(j, (ItemStack)ItemStack.fromNbt(registries, nbtCompound).orElse(ItemStack.EMPTY));
+        for (StackWithSlot stackWithSlot : list) {
+            if (stackWithSlot.isValidSlot(this.size())) {
+                this.setStack(stackWithSlot.slot(), stackWithSlot.stack());
             }
         }
     }
 
-    @Override
-    public NbtList toNbtList(RegistryWrapper.WrapperLookup registries) {
-        NbtList nbtList = new NbtList();
-
-        for(int i = 0; i < this.size(); ++i) {
+    public void writeData(WriteView.ListAppender<StackWithSlot> list) {
+        for (int i = 0; i < this.size(); i++) {
             ItemStack itemStack = this.getStack(i);
             if (!itemStack.isEmpty()) {
-                NbtCompound nbtCompound = new NbtCompound();
-                nbtCompound.putByte("Slot", (byte)i);
-                nbtList.add(itemStack.encode(registries, nbtCompound));
+                list.add(new StackWithSlot(i, itemStack));
             }
         }
-
-        return nbtList;
     }
 
     public void dropAll() {

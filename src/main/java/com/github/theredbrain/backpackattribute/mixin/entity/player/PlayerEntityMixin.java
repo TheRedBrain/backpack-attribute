@@ -1,21 +1,20 @@
 package com.github.theredbrain.backpackattribute.mixin.entity.player;
 
 import com.github.theredbrain.backpackattribute.BackpackAttribute;
+import com.github.theredbrain.backpackattribute.config.ServerConfig;
 import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerEntityMixin;
 import com.github.theredbrain.backpackattribute.inventory.BackpackInventory;
-import com.github.theredbrain.backpackattribute.registry.GameRulesRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.inventory.StackWithSlot;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.*;
@@ -27,8 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlayerEntityMixin {
 
     @Shadow public abstract PlayerInventory getInventory();
-
-    @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
     @Unique
     private static final TrackedData<Integer> OLD_BACKPACK_CAPACITY = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -51,15 +48,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void backpackattribute$tick(CallbackInfo ci) {
-        if (!this.getWorld().isClient) {
+        if (!this.getEntityWorld().isClient()) {
             this.ejectItemsFromInactiveBackpackSlots();
         }
     }
 
     @Inject(method = "dropInventory", at = @At("TAIL"))
     protected void dropInventory(CallbackInfo ci) {
-        if (!this.getWorld().getGameRules().getBoolean(GameRulesRegistry.KEEP_BACKPACK_INVENTORY)) {
-            if (this.getWorld().getGameRules().getBoolean(GameRulesRegistry.CLEAR_BACKPACK_INVENTORY_ON_DEATH)) {
+        ServerConfig serverConfig = BackpackAttribute.SERVER_CONFIG;
+        if (!serverConfig.keep_backpack_inventory_on_death.get()) {
+            if (serverConfig.clear_backpack_inventory_on_death.get()) {
                 this.backpackInventory.clear();
             } else {
                 this.backpackInventory.dropAll();
@@ -68,25 +66,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DuckPlay
 
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    public void backpackattribute$readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
+    @Inject(method = "readCustomData", at = @At("TAIL"))
+    public void backpackattribute$readCustomData(ReadView view, CallbackInfo ci) {
 
-        if (nbt.contains("backpack_items", NbtElement.LIST_TYPE)) {
-            this.backpackInventory.readNbtList(nbt.getList("backpack_items", NbtElement.COMPOUND_TYPE), this.getRegistryManager());
-        }
+        this.backpackInventory.readData(view.getTypedListView("backpack_items", StackWithSlot.CODEC));
 
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    public void backpackattribute$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    public void backpackattribute$writeCustomData(WriteView view, CallbackInfo ci) {
 
-        nbt.put("backpack_items", this.backpackInventory.toNbtList(this.getRegistryManager()));
+        this.backpackInventory.writeData(view.getListAppender("backpack_items", StackWithSlot.CODEC));
 
     }
 
     @Override
     public int backpackattribute$getActiveBackpackCapacity() {
-        return Math.min(27, Math.max(0, Math.min(27, Math.max(0, BackpackAttribute.SERVER_CONFIG.default_backpack_slot_amount.get())) + this.backpackattribute$getBackpackCapacity()));
+        return Math.min(27, Math.max(0, Math.min(27, Math.max(0, BackpackAttribute.SERVER_CONFIG.natural_backpack_slot_amount.get())) + this.backpackattribute$getBackpackCapacity()));
     }
 
     @Override

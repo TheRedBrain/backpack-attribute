@@ -3,7 +3,6 @@ package com.github.theredbrain.backpackattribute;
 import com.github.theredbrain.backpackattribute.config.ServerConfig;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacketReceiver;
-import com.github.theredbrain.backpackattribute.registry.GameRulesRegistry;
 import com.github.theredbrain.backpackattribute.registry.ScreenHandlerTypesRegistry;
 import com.github.theredbrain.inventorysizeattributes.entity.player.DuckPlayerEntityMixin;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
@@ -45,7 +44,6 @@ public class BackpackAttribute implements ModInitializer {
 
 		// Registry
 		ScreenHandlerTypesRegistry.registerAll();
-		GameRulesRegistry.init();
 	}
 
 	public static Identifier identifier(String path) {
