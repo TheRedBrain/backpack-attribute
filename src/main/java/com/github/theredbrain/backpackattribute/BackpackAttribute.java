@@ -4,6 +4,7 @@ import com.github.theredbrain.backpackattribute.compat.InventorySizeAttributesCo
 import com.github.theredbrain.backpackattribute.config.ServerConfig;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacketReceiver;
+import com.github.theredbrain.backpackattribute.registry.DataAttachmentRegistry;
 import com.github.theredbrain.backpackattribute.registry.MenuTypesRegistry;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.fabricmc.api.ModInitializer;
@@ -44,6 +45,7 @@ public class BackpackAttribute implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(OpenBackpackScreenPacket.PACKET_ID, new OpenBackpackScreenPacketReceiver());
 
 		// Registry
+		DataAttachmentRegistry.init();
 		MenuTypesRegistry.registerAll();
 	}
 

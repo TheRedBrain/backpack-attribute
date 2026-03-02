@@ -1,6 +1,6 @@
 package com.github.theredbrain.backpackattribute.network.packet;
 
-import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerMixin;
+import com.github.theredbrain.backpackattribute.entity.DuckLivingEntityMixin;
 import com.github.theredbrain.backpackattribute.screen.BackpackMenu;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.chat.Component;
@@ -11,7 +11,7 @@ public class OpenBackpackScreenPacketReceiver implements ServerPlayNetworking.Pl
     @Override
     public void receive(OpenBackpackScreenPacket payload, ServerPlayNetworking.Context context) {
 
-        int i = ((DuckPlayerMixin)context.player()).backpackattribute$getActiveBackpackCapacity();
+        int i = ((DuckLivingEntityMixin)context.player()).backpackattribute$getBackpackCapacity();
         if (i <= 0) {
             context.player().sendSystemMessage(Component.translatable("hud.message.no_active_capacity"), true);
             return;

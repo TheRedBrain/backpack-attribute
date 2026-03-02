@@ -13,7 +13,7 @@ public class ServerConfig extends Config {
 		super(BackpackAttribute.identifier("server"));
 	}
 
-	public ValidatedInt natural_backpack_slot_amount = new ValidatedInt(0, 27, 0);
+	public ValidatedInt natural_backpack_capacity = new ValidatedInt(0, 27, 0);
 	public ValidatedBoolean keep_backpack_inventory_on_death = new ValidatedBoolean(true);
 	public ValidatedBoolean clear_backpack_inventory_on_death = new ValidatedBoolean(false);
 	public ValidatedBoolean is_backpack_screen_hotkey_enabled = new ValidatedBoolean(true);

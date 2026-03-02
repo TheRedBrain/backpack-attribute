@@ -21,7 +21,7 @@
 
 	"backpackattribute.server": "Server Side Settings",
 
-	"backpackattribute.server.natural_backpack_slot_amount": "Natural Backpack Slot Amount",
+	"backpackattribute.server.natural_backpack_capacity": "Natural Backpack Slot Amount",
 	"backpackattribute.server.keep_backpack_inventory_on_death": "Keep Backpack Content On Death",
 	"backpackattribute.server.clear_backpack_inventory_on_death": "Destroy Backpack Content On Death",
 	"backpackattribute.server.clear_backpack_inventory_on_death.desc": "Is only applied if the backpack content is NOT kept on death.",

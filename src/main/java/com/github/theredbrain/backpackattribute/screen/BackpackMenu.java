@@ -1,6 +1,7 @@
 package com.github.theredbrain.backpackattribute.screen;
 
 import com.github.theredbrain.backpackattribute.BackpackAttribute;
+import com.github.theredbrain.backpackattribute.entity.DuckLivingEntityMixin;
 import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerMixin;
 import com.github.theredbrain.backpackattribute.inventory.BackpackContainer;
 import com.github.theredbrain.backpackattribute.registry.MenuTypesRegistry;
@@ -21,7 +22,7 @@ public class BackpackMenu extends AbstractContainerMenu {
         super(MenuTypesRegistry.BACKPACK_MENU, syncId);
         this.playerInventory = playerInventory;
         this.backpackContainer = ((DuckPlayerMixin) playerInventory.player).backpackattribute$getBackpackInventory();
-        this.backpackCapacity = ((DuckPlayerMixin) playerInventory.player).backpackattribute$getActiveBackpackCapacity();
+        this.backpackCapacity = ((DuckLivingEntityMixin) playerInventory.player).backpackattribute$getBackpackCapacity();
 
         int i;
         // hotbar 0 - 8
@@ -57,6 +58,7 @@ public class BackpackMenu extends AbstractContainerMenu {
 
     }
 
+    @Override
     public ItemStack quickMoveStack(Player player, int slot) {
 
         ItemStack itemStack = ItemStack.EMPTY;
@@ -65,7 +67,7 @@ public class BackpackMenu extends AbstractContainerMenu {
             ItemStack itemStack2 = slot2.getItem();
             itemStack = itemStack2.copy();
             if (slot < 36) {
-                if (!this.moveItemStackTo(itemStack2, 36, Math.min(36 + ((DuckPlayerMixin) player).backpackattribute$getActiveBackpackCapacity(), this.slots.size()), false)) {
+                if (!this.moveItemStackTo(itemStack2, 36, Math.min(36 + this.backpackCapacity, this.slots.size()), false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemStack2, 0, 36, false)) {
@@ -96,6 +98,6 @@ public class BackpackMenu extends AbstractContainerMenu {
     }
 
     public int getBackpackCapacity() {
-        return backpackCapacity;
+        return this.backpackCapacity;
     }
 }
