@@ -2,11 +2,8 @@ package com.github.theredbrain.backpackattribute.registry;
 
 import com.github.theredbrain.backpackattribute.BackpackAttribute;
 import com.github.theredbrain.backpackattribute.BackpackAttributeClient;
-import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -39,13 +36,6 @@ public class KeyBindingsRegistry {
                 openBackpackScreenBoolean = false;
             }
         });
-    }
-
-    @Deprecated
-    public static void openBackpackScreen(MinecraftClient client) {
-        if (client.player != null) {
-            ClientPlayNetworking.send(new OpenBackpackScreenPacket());
-        }
     }
 
     static {

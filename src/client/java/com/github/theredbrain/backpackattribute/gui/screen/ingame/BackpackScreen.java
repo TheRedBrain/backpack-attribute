@@ -51,7 +51,7 @@ public class BackpackScreen extends HandledScreen<BackpackScreenHandler> {
         int j = (this.height - this.backgroundHeight) / 2;
         int k;
         int m;
-        boolean showInactiveSlots = BackpackAttributeClient.CLIENT_CONFIG.show_inactive_slots.get();
+        boolean showInactiveSlots = BackpackAttributeClient.showInactiveInventorySlots();
 
         context.drawTexture(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, i, j, 0, 0, this.backgroundWidth, this.backgroundHeight, this.backgroundWidth, this.backgroundHeight);
 
