@@ -8,6 +8,7 @@
 	"gamerule.clearBackpackInventoryOnDeath.description": "This only matters, if the gamerule 'keepBackpackInventory' is set to false.",
 
 	"gui.backpack_screen.title": "Backpack",
+	"gui.backpack.hotkey_disabled_by_server": "This hotkey was disabled by a server setting",
 
 	"hud.message.itemRemovedFromInactiveBackpackSlots": "Your backpack got smaller and some items were transferred to your normal inventory. If your inventory was full, they were dropped at your location.",
 	"hud.message.no_active_capacity": "You currently have no backpack slots.",
@@ -20,5 +21,9 @@
 
 	"backpackattribute.server": "Server Side Settings",
 
-	"backpackattribute.server.default_backpack_slot_amount": "Default Backpack Slot Amount"
+	"backpackattribute.server.natural_backpack_slot_amount": "Natural Backpack Slot Amount",
+	"backpackattribute.server.keep_backpack_inventory_on_death": "Keep Backpack Content On Death",
+	"backpackattribute.server.clear_backpack_inventory_on_death": "Destroy Backpack Content On Death",
+	"backpackattribute.server.clear_backpack_inventory_on_death.desc": "Is only applied if the backpack content is NOT kept on death.",
+	"backpackattribute.server.is_backpack_screen_hotkey_enabled": "Enable Backpack Hotkey"
 }

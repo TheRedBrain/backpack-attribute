@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyBindingsRegistry {
@@ -27,7 +28,11 @@ public class KeyBindingsRegistry {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KeyBindingsRegistry.openBackpackScreen.wasPressed()) {
                 if (!openBackpackScreenBoolean) {
-                    BackpackAttributeClient.openBackpackScreen(client);
+                    if (BackpackAttribute.SERVER_CONFIG.is_backpack_screen_hotkey_enabled.get()) {
+                        BackpackAttributeClient.openBackpackScreen(client);
+                    } else if (client.player != null) {
+                        client.player.sendMessage(Text.translatable("gui.backpack.hotkey_disabled_by_server"), false);
+                    }
                 }
                 openBackpackScreenBoolean = true;
             } else if (openBackpackScreenBoolean) {
