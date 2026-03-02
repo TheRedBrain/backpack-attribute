@@ -1,3 +1,25 @@
+# 3.0.0
+
+- updated to 1.21.11
+- migrated to Mojang Mappings
+
+## Additions
+
+- added server config option to disable the hotkey for opening the backpack screen
+
+## Changes
+
+- replaced game rules with server config options
+
+## Fixes
+
+- fixed potential issues regarding config initialization and "Inventory Size Attributes" integration
+
+## Technical
+
+- replaced synced data with a data attachment, following the best practice for custom entity data
+- removed deprecated API method
+
 # 2.2.0
 
 - removed dependency on cloth config

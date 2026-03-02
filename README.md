@@ -10,9 +10,9 @@ The maximum amount of slots is 27.
 
 ## Configuration
 
-The value "default_backpack_slot_amount" in the server config file controls the amount of backpack slots each player has by default.
+The "natural_backpack_capacity" server config option controls the amount of backpack slots each player has by default.
 
-The entity attribute "generic.backpack_capacity" controls how many slots are added to/removed from the default amount. This is 0 by default, but with entity attribute modifiers (EAMs) it can be changed.
+The entity attribute "backpackattribute:backpack_capacity" controls how many slots are added to/removed from the default amount. This is 0 by default, but with entity attribute modifiers (EAMs) it can be changed.
 
 The background texture of disabled slots is not shown. This can be disabled in the client config.
 
@@ -22,18 +22,10 @@ When a backpack slot contains an item and becomes inactive, that item is moved t
 
 ## "What happens to items in my backpack when I die?"
 
-Two new game rules control what happens in the case of player death.
+Several server config options control what happens in the case of player death.
 
-"keepBackpackInventory" defaults to false.
+When the "keep_backpack_inventory_on_death" option is set to true, the items stay in the backpack. This is similar to the vanilla "keepInventory" game rule.
 
-"clearBackpackInventoryOnDeath" defaults to false.
-
-When "keepBackpackInventory" is set to true, the items stay in the backpack. This is similar to the vanilla gameRule "keepInventory".
-
-When "keepBackpackInventory" is set to false, two outcomes are possible:
-- When "clearBackpackInventoryOnDeath" is true, the items are destroyed.
-- When "clearBackpackInventoryOnDeath" is false, the items are dropped on the players position.
-
-## Mod Compatibility
-
-The backpack screen will not show disabled inventory slots, when "Inventory Size Attributes" is installed.
+When "keep_backpack_inventory_on_death" is set to false, two outcomes are possible, depending on the "clear_backpack_inventory_on_death" option:
+- When the option is true, the items are destroyed.
+- When the option is false, the items are dropped on the players position.
