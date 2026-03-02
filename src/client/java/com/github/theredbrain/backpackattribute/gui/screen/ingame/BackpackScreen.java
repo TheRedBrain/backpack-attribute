@@ -51,19 +51,19 @@ public class BackpackScreen extends AbstractContainerScreen<BackpackMenu> {
         int j = (this.height - this.imageHeight) / 2;
         int k;
         int m;
-        boolean showInactiveSlots = BackpackAttributeClient.showInactiveInventorySlots();
+        boolean showInactiveInventorySlots = BackpackAttributeClient.showInactiveInventorySlots();
 
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-        for (k = 0; k < (showInactiveSlots ? 27 : Math.min(this.backpackCapacity, 27)); ++k) {
+        for (k = 0; k < (BackpackAttributeClient.CLIENT_CONFIG.show_inactive_backpack_slots.get() ? 27 : Math.min(this.backpackCapacity, 27)); ++k) {
             m = (k / 9);
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SLOT_TEXTURE, i + 7 + (k - (m * 9)) * 18, j + 17 + (m * 18), 0, 0, 18, 18, 18, 18);
         }
-        for (k = 0; k < (showInactiveSlots ? 27 : Math.min(this.inventorySize, 27)); ++k) {
+        for (k = 0; k < (showInactiveInventorySlots ? 27 : Math.min(this.inventorySize, 27)); ++k) {
             m = (k / 9);
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SLOT_TEXTURE, i + 7 + (k - (m * 9)) * 18, j + 83 + (m * 18), 0, 0, 18, 18, 18, 18);
         }
-        for (k = 0; k < (showInactiveSlots ? 9 : Math.min(this.hotbarSize, 9)); ++k) {
+        for (k = 0; k < (showInactiveInventorySlots ? 9 : Math.min(this.hotbarSize, 9)); ++k) {
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, SLOT_TEXTURE, i + 7 + k * 18, j + 141, 0, 0, 18, 18, 18, 18);
         }
     }
