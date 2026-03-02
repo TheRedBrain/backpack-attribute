@@ -4,16 +4,16 @@ import com.github.theredbrain.backpackattribute.compat.InventorySizeAttributesCo
 import com.github.theredbrain.backpackattribute.config.ServerConfig;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacket;
 import com.github.theredbrain.backpackattribute.network.packet.OpenBackpackScreenPacketReceiver;
-import com.github.theredbrain.backpackattribute.registry.ScreenHandlerTypesRegistry;
+import com.github.theredbrain.backpackattribute.registry.MenuTypesRegistry;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +22,15 @@ public class BackpackAttribute implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static ServerConfig SERVER_CONFIG;
 
-	public static RegistryEntry<EntityAttribute> BACKPACK_CAPACITY;
+	public static Holder<Attribute> BACKPACK_CAPACITY;
 
 	public static final boolean isInventorySizeAttributesLoaded = FabricLoader.getInstance().isModLoaded("inventorysizeattributes");
 
-	public static int getActiveInventorySize(PlayerEntity player) {
+	public static int getActiveInventorySize(Player player) {
 		return isInventorySizeAttributesLoaded ? InventorySizeAttributesCompat.getActiveInventorySize(player) : 27;
 	}
 
-	public static int getActiveHotbarSize(PlayerEntity player) {
+	public static int getActiveHotbarSize(Player player) {
 		return isInventorySizeAttributesLoaded ? InventorySizeAttributesCompat.getActiveHotbarSize(player) : 9;
 	}
 
@@ -44,11 +44,11 @@ public class BackpackAttribute implements ModInitializer {
 		ServerPlayNetworking.registerGlobalReceiver(OpenBackpackScreenPacket.PACKET_ID, new OpenBackpackScreenPacketReceiver());
 
 		// Registry
-		ScreenHandlerTypesRegistry.registerAll();
+		MenuTypesRegistry.registerAll();
 	}
 
 	public static Identifier identifier(String path) {
-		return Identifier.of(MOD_ID, path);
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 
 }

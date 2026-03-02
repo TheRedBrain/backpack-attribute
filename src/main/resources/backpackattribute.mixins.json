@@ -4,9 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "entity.LivingEntityMixin",
-    "entity.attribute.EntityAttributesMixin",
-    "entity.player.PlayerEntityMixin",
-    "server.network.ServerPlayerEntityMixin"
+    "entity.attribute.AttributesMixin",
+    "entity.player.PlayerMixin",
+	  "server.network.ServerPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

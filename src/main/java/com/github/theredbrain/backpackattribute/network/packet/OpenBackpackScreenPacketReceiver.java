@@ -1,21 +1,21 @@
 package com.github.theredbrain.backpackattribute.network.packet;
 
-import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerEntityMixin;
-import com.github.theredbrain.backpackattribute.screen.BackpackScreenHandler;
+import com.github.theredbrain.backpackattribute.entity.player.DuckPlayerMixin;
+import com.github.theredbrain.backpackattribute.screen.BackpackMenu;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 
 public class OpenBackpackScreenPacketReceiver implements ServerPlayNetworking.PlayPayloadHandler<OpenBackpackScreenPacket> {
 
     @Override
     public void receive(OpenBackpackScreenPacket payload, ServerPlayNetworking.Context context) {
 
-        int i = ((DuckPlayerEntityMixin)context.player()).backpackattribute$getActiveBackpackCapacity();
+        int i = ((DuckPlayerMixin)context.player()).backpackattribute$getActiveBackpackCapacity();
         if (i <= 0) {
-            context.player().sendMessageToClient(Text.translatable("hud.message.no_active_capacity"), true);
+            context.player().sendSystemMessage(Component.translatable("hud.message.no_active_capacity"), true);
             return;
         }
-        context.player().openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new BackpackScreenHandler(syncId, inventory), Text.translatable("gui.backpack_screen.title")));
+        context.player().openMenu(new SimpleMenuProvider((syncId, inventory, player) -> new BackpackMenu(syncId, inventory), Component.translatable("gui.backpack_screen.title")));
     }
 }
