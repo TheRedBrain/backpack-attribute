@@ -105,7 +105,7 @@ public abstract class PlayerMixin extends LivingEntity implements DuckPlayerMixi
 				}
 			}
 			if (bl && ((Player) (Object) this) instanceof ServerPlayer serverPlayerEntity) {
-				serverPlayerEntity.displayClientMessage(Component.translatable("hud.message.itemRemovedFromInactiveBackpackSlots"), false);
+				serverPlayerEntity.sendSystemMessage(Component.translatable("hud.message.item_removed_from_inactive_backpack_slots"), false);
 			}
 			this.shouldCheckForItemsInInactiveSlots = false;
 		}
