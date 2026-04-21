@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ServerPlayerMixin {
 
     @Inject(method = "restoreFrom", at = @At("TAIL"))
-    public void backpackattribute$restoreFrom(ServerPlayer oldPlayer, boolean alive, CallbackInfo ci) {
+    public void backpackattribute$restoreFrom(ServerPlayer oldPlayer, boolean restoreAll, CallbackInfo ci) {
         ((DuckPlayerMixin) this).backpackattribute$setBackpackInventory(((DuckPlayerMixin) oldPlayer).backpackattribute$getBackpackInventory());
     }
 }

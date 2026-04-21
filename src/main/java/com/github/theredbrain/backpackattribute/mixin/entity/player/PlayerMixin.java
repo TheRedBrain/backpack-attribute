@@ -61,16 +61,16 @@ public abstract class PlayerMixin extends LivingEntity implements DuckPlayerMixi
 	}
 
 	@Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-	public void backpackattribute$readAdditionalSaveData(ValueInput view, CallbackInfo ci) {
+	public void backpackattribute$readAdditionalSaveData(ValueInput input, CallbackInfo ci) {
 
-		this.backpackContainer.readData(view.listOrEmpty("backpack_items", ItemStackWithSlot.CODEC));
+		this.backpackContainer.readData(input.listOrEmpty("backpack_items", ItemStackWithSlot.CODEC));
 
 	}
 
 	@Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-	public void backpackattribute$addAdditionalSaveData(ValueOutput view, CallbackInfo ci) {
+	public void backpackattribute$addAdditionalSaveData(ValueOutput output, CallbackInfo ci) {
 
-		this.backpackContainer.writeData(view.list("backpack_items", ItemStackWithSlot.CODEC));
+		this.backpackContainer.writeData(output.list("backpack_items", ItemStackWithSlot.CODEC));
 
 	}
 
